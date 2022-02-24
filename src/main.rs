@@ -10,6 +10,9 @@ struct Args {
     signal: Vec<String>,
 
     #[clap(short, long)]
+    clock: Vec<String>,
+
+    #[clap(short, long)]
     #[clap(default_value_t = String::from("Siggi Diagram"))]
     title: String,
 
@@ -38,6 +41,10 @@ fn main() {
     let mut diag = Diagram::new(args.title);
     if args.dark {
         diag.dark();
+    }
+    
+    for clock in args.clock.iter() {
+        diag.add(Lane::new(clock.parse::<Signal>().expect("Could not parse clock from given string")))
     }
     
     for (num,wave) in args.signal.iter().enumerate() {

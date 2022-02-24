@@ -1,0 +1,24 @@
+// compose/mod.rs
+
+// Constants
+const PADDING: f64 = 30.0;
+const PADDING_TOP: f64 = PADDING;
+const PADDING_BOTTOM: f64 = PADDING;
+const PADDING_LEFT: f64 = PADDING;
+const PADDING_RIGHT: f64 = PADDING;
+const HEADER_HEIGHT: f64 = 25.0;  // if no title set to 0;
+const FOOTER_HEIGHT: f64 = 0.0;
+
+const WAVE_PERIOD_WIDTH: f64 = 50.0;
+const WAVE_HEIGHT: f64 = WAVE_PERIOD_WIDTH;
+const WAVE_PADDING: f64 = WAVE_HEIGHT/2.0;
+const WAVE_PADDING_TOP: f64 = WAVE_PADDING;
+const WAVE_PADDING_BOTTOM: f64 = WAVE_PADDING;
+const LANE_HEIGHT: f64 = WAVE_HEIGHT + WAVE_PADDING_TOP + WAVE_PADDING_BOTTOM;
+
+static mut WAVE_OFFSET: f64 = WAVE_PERIOD_WIDTH * 2.0;
+static mut WAVE_WIDTH: f64 = WAVE_PERIOD_WIDTH * 5.0;
+static mut LANE_WIDTH: f64 = unsafe {WAVE_OFFSET + WAVE_WIDTH};
+
+pub struct Compositor {}
+

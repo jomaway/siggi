@@ -53,7 +53,7 @@ impl Compositor {
             .set("width", "100%")
             .set("height", "100%");
 
-        let title = Label::new(diag.title());
+        let title = Label::new(diag.title().to_string());
         let title = Text::from(&title).translate(width/2.0,PADDING);
 
         let mut lanes = Group::new().set("id", "lanes");
@@ -82,14 +82,14 @@ impl Compositor {
         let wave_end = wave_offset + max_ww; // max_ww gets calculated at the top of consume().
 
         // compose y-axis labels
-        let y_axis_label_heigh = Text::from(&Label::small(lane.sig.y_axis.0))
+        let y_axis_label_heigh = Text::from(&Label::small(lane.sig.y_axis.0.to_string()))
             .translate(wave_offset-10.0, WAVE_PADDING_TOP);
-        let y_axis_label_low = Text::from(&Label::small(lane.sig.y_axis.1))
+        let y_axis_label_low = Text::from(&Label::small(lane.sig.y_axis.1.to_string()))
             .translate(wave_offset-10.0, WAVE_PADDING_TOP + WAVE_HEIGHT );
 
 
             // add posibility to crate a label from the title.
-        let signal_name_label = Text::from(&signal_title_to_label(lane.sig.name, lane.sig.color)
+        let signal_name_label = Text::from(&signal_title_to_label(lane.sig.name.to_string(), lane.sig.color)
             ).translate(wave_offset-15.0, WAVE_PADDING_TOP + WAVE_HEIGHT/2.0);
 
         group.append(y_axis_label_heigh);
@@ -136,7 +136,7 @@ fn h_dashed_line(x1: f64,x2: f64,y: f64) -> Line {
         .set("x2", x2).set("y2", y)
 }
 
-fn signal_title_to_label(title: &'static str, color: Color) -> Label{
+fn signal_title_to_label(title: String, color: Color) -> Label{
     let mut label = Label::new(title);
     label.set_anchor(TextAnchor::End);
     label.set_color(color);

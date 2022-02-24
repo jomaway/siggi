@@ -58,9 +58,9 @@ impl Line {
 
 
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Default)]
 pub struct Label{
-    text: &'static str,
+    text: String,
     position: f64,
     color: Color,
     size: TextSize,
@@ -68,13 +68,13 @@ pub struct Label{
 }
 
 impl Label {
-    pub fn new(text: &'static str) -> Self { Self { text, ..Default::default()} }
+    pub fn new(text: String) -> Self { Self { text, ..Default::default()} }
 
-    pub fn small(text: &'static str) -> Self {
+    pub fn small(text: String) -> Self {
         Self { text, size: TextSize::Small, color: Color::Lightgray, ..Default::default()}
     }
 
-    pub fn large(text: &'static str) -> Self {
+    pub fn large(text: String) -> Self {
         Self { text, size: TextSize::Large, ..Default::default()}
     }
 
@@ -85,7 +85,7 @@ impl Label {
 
     /// Get the label's text.
     pub fn text(&self) -> &str {
-        self.text
+        &self.text
     }
 
     /// Get the label's color.

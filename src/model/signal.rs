@@ -5,7 +5,7 @@ use super::{utils::Color};
 
 #[derive(Debug,Clone, PartialEq)]
 pub struct Signal {
-    pub name: &'static str,
+    pub name: String,
     pub wave: Wave,
     pub phase: f64,     // Phase shift -> default = 0.0
     pub period: f64,    // Period len  -> default = 1.0
@@ -34,6 +34,8 @@ pub struct Wave {
 }
 
 impl Wave {
+    pub fn new() -> Self { Self::default() }
+
     pub fn len(&self) -> usize {
         self.levels.len()
     }
@@ -73,7 +75,7 @@ pub enum Level {
 impl Default for Signal {
     fn default() -> Self {
         Self { 
-            name: "Sig", 
+            name: String::from("Sig"), 
             wave: Default::default(), 
             phase: 0.0, 
             period: 1.0, 
@@ -83,7 +85,11 @@ impl Default for Signal {
 }
 
 impl Signal {
-    pub fn name<T>(&mut self, name: T) -> &mut Self where T: Into<&'static str> {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn name<T>(&mut self, name: T) -> &mut Self where T: Into<String> {
         self.name = name.into();
         self
     }

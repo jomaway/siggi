@@ -8,15 +8,17 @@ use self::{utils::Color, markers::{Line, Label, Marker}};
 
 #[derive(Debug, Default, Clone)]
 pub struct Diagram {
-    title: &'static str,
+    title: String,
     lanes: Vec<Lane>,
     background: Color,
 }
 
 impl Diagram {
-    pub fn new(title: &'static str) -> Self { Self { title, background: Color::White, ..Default::default() } }
+    pub fn new<T>(title: T) -> Self where T: Into<String> { 
+        Self { title: title.into(), background: Color::White, ..Default::default() } 
+    }
 
-    pub fn dark(mut self) -> Self {
+    pub fn dark(&mut self) -> &mut Self {
         self.background = Color::Darkgray;
         self
     }
@@ -32,8 +34,8 @@ impl Diagram {
     }
 
     /// Get the diagram's title.
-    pub fn title(&self) -> &'static str {
-        self.title
+    pub fn title(&self) -> &str {
+        &self.title
     }
 
     /// Get the diagram's background.
@@ -76,9 +78,9 @@ impl Lane {
         self.markers.push(*Line::default().at(position));
     }
 
-    pub fn label_at(&mut self, text: &'static str, position: f64) {
+    pub fn label_at(&mut self, text: String, position: f64) {
 
-        self.labels.push(*Label::new(text).at(position));
+        self.labels.push(Label::new(text).at(position).clone());
     }
 }
 

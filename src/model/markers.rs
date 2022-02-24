@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::fmt::{Debug, Display};
 
 use super::utils::Color;
 
@@ -74,6 +74,26 @@ impl Label {
         self.position = position;
         self
     }
+
+    /// Get the label's text.
+    pub fn text(&self) -> &str {
+        self.text
+    }
+
+    /// Get the label's color.
+    pub fn color(&self) -> Color {
+        self.color
+    }
+
+    /// Get the label's size.
+    pub fn size(&self) -> TextSize {
+        self.size
+    }
+
+    /// Get the label's anchor.
+    pub fn anchor(&self) -> TextAnchor {
+        self.anchor
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -91,6 +111,18 @@ impl Default for TextSize {
     }
 }
 
+impl Display for TextSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TextSize::Small => write!(f, "small"),
+            TextSize::Smaller => write!(f, "smaller"),
+            TextSize::Normal => write!(f, "normal"),
+            TextSize::Larger => write!(f, "larger"),
+            TextSize::Large => write!(f, "large"),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub enum TextAnchor {
     Start,
@@ -101,5 +133,16 @@ pub enum TextAnchor {
 impl Default for TextAnchor {
     fn default() -> Self {
         Self::Middle
+    }
+}
+
+
+impl Display for TextAnchor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TextAnchor::Start => write!(f,"start"),
+            TextAnchor::End => write!(f,"end"),
+            TextAnchor::Middle => write!(f,"middle"),
+        }
     }
 }

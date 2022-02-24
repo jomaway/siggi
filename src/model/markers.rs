@@ -43,16 +43,26 @@ pub struct Line {
 
 impl Default for Line {
     fn default() -> Self {
-        Self { position: 0.0, dashed: true, thickness: 1.0, color: Default::default() }
+        Self { position: 0.0, dashed: true, thickness: 1.0, color: Color::Lightgray }
     }
 }
 
 impl Line {
     pub fn new(position: f64, dashed: bool, thickness: f64, color: Color) -> Self { Self { position, dashed, thickness, color } }
-    
-    fn at(mut self, position: f64) -> Self {
-        self.position = position;
-        self
+
+    /// Get the line's color.
+    pub fn color(&self) -> Color {
+        self.color
+    }
+
+    /// Get the line's thickness.
+    pub fn thickness(&self) -> f64 {
+        self.thickness
+    }
+
+    /// Get the line's dashed.
+    pub fn dashed(&self) -> bool {
+        self.dashed
     }
 }
 
@@ -68,7 +78,7 @@ pub struct Label{
 }
 
 impl Label {
-    pub fn new(text: String) -> Self { Self { text, ..Default::default()} }
+    pub fn new<T>(text: T) -> Self where T: Into<String> { Self { text: text.into(), ..Default::default()} }
 
     pub fn small(text: String) -> Self {
         Self { text, size: TextSize::Small, color: Color::Lightgray, ..Default::default()}
@@ -78,8 +88,8 @@ impl Label {
         Self { text, size: TextSize::Large, ..Default::default()}
     }
 
-    fn at(mut self, position: f64) -> Self {
-        self.position = position;
+    pub fn with_size(&mut self, size: TextSize) -> &mut Self {
+        self.size = size;
         self
     }
 

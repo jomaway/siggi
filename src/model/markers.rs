@@ -70,6 +70,14 @@ pub struct Label{
 impl Label {
     pub fn new(text: &'static str) -> Self { Self { text, ..Default::default()} }
 
+    pub fn small(text: &'static str) -> Self {
+        Self { text, size: TextSize::Small, color: Color::Lightgray, ..Default::default()}
+    }
+
+    pub fn large(text: &'static str) -> Self {
+        Self { text, size: TextSize::Large, ..Default::default()}
+    }
+
     fn at(mut self, position: f64) -> Self {
         self.position = position;
         self
@@ -93,6 +101,21 @@ impl Label {
     /// Get the label's anchor.
     pub fn anchor(&self) -> TextAnchor {
         self.anchor
+    }
+
+    /// Set the label's color.
+    pub fn set_color(&mut self, color: Color) {
+        self.color = color;
+    }
+
+    /// Set the label's size.
+    pub fn set_size(&mut self, size: TextSize) {
+        self.size = size;
+    }
+
+    /// Set the label's anchor.
+    pub fn set_anchor(&mut self, anchor: TextAnchor) {
+        self.anchor = anchor;
     }
 }
 

@@ -4,7 +4,7 @@ pub mod markers;
 
 pub use signal::Signal;
 
-use self::{utils::Color, markers::{Line, Label, Marker}};
+use self::{utils::Color, markers::{Line, Label, Marker, TextSize}};
 
 #[derive(Debug, Default, Clone)]
 pub struct Diagram {
@@ -64,6 +64,11 @@ pub struct Lane {
 impl Lane {
     pub fn new(sig: Signal) -> Self { Self { sig, ..Default::default()} }
 
+    pub fn append_labels(&mut self, labels: &mut Vec<Label>) -> &mut Self {
+        self.labels.append(labels);
+        self
+    }
+
     pub fn add_marker(&mut self, marker: Line) -> &mut Self {
         self.markers.push(marker);
         self
@@ -78,9 +83,18 @@ impl Lane {
         self.markers.push(*Line::default().at(position));
     }
 
-    pub fn label_at(&mut self, text: String, position: f64) {
+    pub fn with_mark_at(&mut self,  position: f64) -> &mut Self  {
+        self.mark_at(position);
+        self
+    }
 
-        self.labels.push(Label::new(text).at(position).clone());
+    pub fn label_at<T>(&mut self, text: T, position: f64) where T: Into<String> {
+        self.labels.push(Label::new(text.into()).at(position).with_size(TextSize::Small).clone());
+    }
+
+    pub fn with_label_at<T>(&mut self, text: T, position: f64) -> &mut Self where T: Into<String> {
+        self.label_at(text, position);
+        self
     }
 }
 

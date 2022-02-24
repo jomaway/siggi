@@ -14,7 +14,7 @@ pub struct Diagram {
 }
 
 impl Diagram {
-    pub fn new(title: &'static str) -> Self { Self { title, ..Default::default() } }
+    pub fn new(title: &'static str) -> Self { Self { title, background: Color::White, ..Default::default() } }
 
     pub fn dark(mut self) -> Self {
         self.background = Color::Darkgray;
@@ -32,13 +32,23 @@ impl Diagram {
     }
 
     /// Get the diagram's title.
-    pub fn title(&self) -> &str {
+    pub fn title(&self) -> &'static str {
         self.title
     }
 
     /// Get the diagram's background.
     pub fn background(&self) -> Color {
         self.background
+    }
+
+    // Get the number of lanes in the diagram
+    pub fn lane_count(&self) -> usize {
+        self.lanes.len()
+    }
+
+    /// Get a reference to the diagram's lanes.
+    pub fn lanes(&self) -> &[Lane] {
+        self.lanes.as_ref()
     }
 }
 

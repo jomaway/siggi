@@ -1,14 +1,14 @@
 // siggi/model/signal.rs
 
-use super::utils::Color;
+use super::{utils::Color};
 
 
 #[derive(Debug,Clone, PartialEq)]
 pub struct Signal {
     pub name: &'static str,
     pub wave: Wave,
-    pub phase: f64,
-    pub period: f64,
+    pub phase: f64,     // Phase shift -> default = 0.0
+    pub period: f64,    // Period len  -> default = 1.0
     pub color: Color,
     pub y_axis: (&'static str, &'static str),
 }
@@ -61,13 +61,13 @@ impl Ord for Wave {
     }
 }
 
-#[derive(Debug,Clone,Copy)]
+#[derive(Debug,Clone,Copy, PartialEq, Eq)]
 pub enum Level {
-    LOW,
-    HIGH,
-    IDLE,
-    UP,
-    DOWN,
+    Low,
+    High,
+    Idle,
+    Up,
+    Down,
 }
 
 impl Default for Signal {
@@ -75,8 +75,8 @@ impl Default for Signal {
         Self { 
             name: "Sig", 
             wave: Default::default(), 
-            phase: Default::default(), 
-            period: Default::default(), 
+            phase: 0.0, 
+            period: 1.0, 
             color: Default::default(), 
             y_axis: ("H","L") }
     }
@@ -106,6 +106,10 @@ impl Signal {
     pub fn color<T>(&mut self, color: T) -> &mut Self where T: Into<Color> {
         self.color = color.into();
         self
+    }
+
+    pub fn len(&self) -> usize {
+        self.wave.len()
     }
 }
 
@@ -147,8 +151,8 @@ pub enum ClockType {
 impl SignalGenerator for Clock {
     fn to_signal(&self) -> Signal {
         let wave_data = match self.typ {
-            ClockType::Negativ => vec![Level::UP;self.periods],
-            ClockType::Positiv => vec![Level::DOWN;self.periods],
+            ClockType::Negativ => vec![Level::Up;self.periods],
+            ClockType::Positiv => vec![Level::Down;self.periods],
         };
         Signal::default()
             .name(self.name)

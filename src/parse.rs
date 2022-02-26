@@ -14,8 +14,8 @@ fn default_to_1() -> f64 {
     1.0
 }
 
-fn default_yaxis() -> String {
-    "H,L".into()
+fn default_yaxis() -> YAxis {
+    YAxis { top: "H".into(), bottom: "L".into() }
 }
 
 #[derive(Debug, Deserialize)]
@@ -42,10 +42,15 @@ struct JsonSignal {
     #[serde(default)]
     color: Color,
     #[serde(default = "default_yaxis")]
-    _yaxis: String, // todo!()
+    yaxis: YAxis, 
     #[serde(default, deserialize_with = "de_markers")]
     markers: Vec<Marker>,
+}
 
+#[derive(Debug, Deserialize)]
+struct YAxis {
+    top: String,
+    bottom: String,
 }
 
 fn de_markers<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<Marker>, D::Error> {
@@ -161,6 +166,11 @@ impl FromStr for Wave {
     }
 }
 
+impl YAxis {
+    pub fn to_tuple(&self) -> (String, String) {
+        (self.top.clone(), self.bottom.clone())
+    }
+}
 
 impl TryFrom<&JsonSignal> for Signal {
     type Error = ParseError;
@@ -169,7 +179,8 @@ impl TryFrom<&JsonSignal> for Signal {
         Ok(Signal::new(&json_signal.name, json_signal.wave.parse()?)
             .shift(json_signal.phase)
             .scale(json_signal.period)
-            .color_with(json_signal.color))
+            .color_with(json_signal.color)
+            .label_yaxis_with(json_signal.yaxis.to_tuple()))
     }
 } 
 

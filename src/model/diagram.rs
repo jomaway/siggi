@@ -1,5 +1,5 @@
 
-use super::{utils::Color, markers::{Line, Label, TextSize}, Signal};
+use super::{utils::Color, marker::{Marker, Label, TextSize}, Signal};
 
 
 #[derive(Debug, Clone)]
@@ -85,7 +85,7 @@ impl Diagram {
 #[derive(Debug, Default, Clone)]
 pub struct Lane {
     pub signal: Signal,
-    pub markers: Vec<Line>,
+    pub markers: Vec<Marker>,
     pub labels: Vec<Label>,
 }
 
@@ -94,7 +94,7 @@ impl Lane {
 
     /// Add marker to the lane
     /// Supports builder pattern
-    pub fn add_marker(mut self, marker: Line) -> Self {
+    pub fn add_marker(mut self, marker: Marker) -> Self {
         self.markers.push(marker);
         self
     }
@@ -107,7 +107,7 @@ impl Lane {
     }
 
     /// Append maker to the lane
-    pub fn append_marker(&mut self, marker: Line) -> &mut Self {
+    pub fn append_marker(&mut self, marker: Marker) -> &mut Self {
         self.markers.push(marker);
         self
     }
@@ -127,7 +127,7 @@ impl Lane {
 
     /// Append a default marker at the given position
     pub fn append_marker_at(&mut self, position: f64) -> &mut Self {
-        self.markers.push(Line::default().at(position));
+        self.markers.push(Marker::default().at(position));
         self
     }
 

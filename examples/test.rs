@@ -1,4 +1,4 @@
-use siggi::{compose::Compositor, model::{Diagram, utils::Color, signal::{Clock, SignalGenerator, Wave}, Signal, markers::{Label, Line}, Lane}};
+use siggi::{compose::Compositor, model::{Diagram, utils::Color, signal::{Clock, SignalGenerator, Wave}, Signal, marker, Lane}};
 
 
 fn main() {
@@ -24,7 +24,7 @@ fn generate_test_diagram() -> Diagram {
 
     let mut d1 = Diagram::new(Some("Simple siggi diagram".to_string()));
 
-    let markerline = Line::new(1.5,true,1.2, Color::Red);
+    let markerline = marker::Marker::new(1.5,true,1.2, Color::Red);
     d1.append(
         Lane::new(nclk)
             .add_marker(markerline)

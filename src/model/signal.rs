@@ -19,13 +19,13 @@ impl Eq for Signal {}
 impl PartialOrd for Signal {
     // Order the signals by their wave length.
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.wave.partial_cmp(&other.wave) 
+        self.len().partial_cmp(&other.len()) 
     }
 }
 
 impl Ord for Signal {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.wave.cmp(&other.wave)
+        self.len().cmp(&other.len())
     }
 }
 
@@ -60,7 +60,7 @@ impl PartialOrd for Wave {
 
 impl Ord for Wave {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.levels.len().cmp(&other.levels.len())
+        self.len().cmp(&other.len())
     }
 }
 
@@ -136,8 +136,8 @@ impl Signal {
         self
     }
 
-    pub fn len(&self) -> usize {
-        self.wave.len()
+    pub fn len(&self) -> u32 {
+        (self.wave.len() as f64 * self.period).ceil() as u32  // todo!() return an f64 and find a way to compare those. 
     }
 }
 

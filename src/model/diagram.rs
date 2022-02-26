@@ -1,5 +1,5 @@
 
-use super::{utils::Color, markers::{Line, Label, Marker, TextSize}, Signal};
+use super::{utils::Color, markers::{Line, Label, TextSize}, Signal};
 
 
 #[derive(Debug, Clone)]

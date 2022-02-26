@@ -27,6 +27,7 @@ struct JsonSignal {
     phase: f64,
     #[serde(default = "default_period")]
     period: f64,
+    #[serde(default)]
     color: Color,
 }
 

@@ -84,9 +84,9 @@ impl Compositor {
         let wave_end = wave_offset + max_ww; // max_ww gets calculated at the top of consume().
 
         // compose y-axis labels
-        let y_axis_label_heigh = Text::from(&Label::from(lane.signal.y_axis.0).small())
+        let y_axis_label_heigh = Text::from(&Label::from(lane.signal.y_axis.0.to_string()).small())
             .translate(wave_offset-10.0, WAVE_PADDING_TOP);
-        let y_axis_label_low = Text::from(&Label::from(lane.signal.y_axis.1).small())
+        let y_axis_label_low = Text::from(&Label::from(lane.signal.y_axis.1.to_string()).small())
             .translate(wave_offset-10.0, WAVE_PADDING_TOP + WAVE_HEIGHT );
 
         // todo!() add posibility to crate a label from the title.

@@ -1,6 +1,8 @@
 use std::fmt::Display;
 
-#[derive(Debug, PartialEq, Clone, Copy)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, PartialEq, Clone, Copy, Serialize, Deserialize)]
 pub enum Color { 
     Yellow,
     Blue, 
@@ -9,7 +11,7 @@ pub enum Color {
     Black,
     Darkgray,
     Lightgray,
-    Custom(&'static str),
+    Custom((u8,u8,u8)),
 }
 
 impl Default for Color {
@@ -28,22 +30,7 @@ impl Display for Color {
             Color::Black => write!(f,"#000000"),
             Color::Darkgray => write!(f,"#1c2833"),
             Color::Lightgray => write!(f,"#74838f"),
-            Color::Custom(string) => write!(f,"{}",string),
-        }
-    }
-}
-
-impl Color {
-    pub fn as_html_color_str(& self) -> &str {
-        match self {
-            Color::Yellow => "#FFC300",
-            Color::Blue => "#0D84F0",
-            Color::Red => "#FF5733",
-            Color::White => "#FFFFFF",
-            Color::Black => "#000000",
-            Color::Darkgray => "#1c2833",
-            Color::Lightgray => "#74838f",
-            Color::Custom(string) => string,
+            Color::Custom((r,g,b)) => write!(f,"#{:#2x}{:#2x}{:#2x}",r,g,b),
         }
     }
 }

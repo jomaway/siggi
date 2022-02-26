@@ -1,6 +1,7 @@
 
 use super::{utils::Color, markers::{Line, Label, Marker, TextSize}, Signal};
 
+
 #[derive(Debug, Clone)]
 pub struct Diagram {
     title: Option<String>,

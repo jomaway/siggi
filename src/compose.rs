@@ -154,9 +154,9 @@ impl Compositor {
 }
 
 // helper functions
-fn get_max_wave_len(diagram: &Diagram) -> usize {
+fn get_max_wave_len(diagram: &Diagram) -> u32 {
     if let Some(max_sig) = diagram.lanes().iter().map(|l| &l.signal ).max() {
-        return max_sig.wave.len();
+        return max_sig.len();
     } else {
         return 0;
     }

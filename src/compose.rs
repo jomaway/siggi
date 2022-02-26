@@ -1,7 +1,7 @@
 // compose/mod.rs
 use svg::{self, node::element::{Group, Text, Path, Rectangle, Line, path::Data}, Node};
 
-use crate::model::{Diagram, markers::{Label, TextAnchor, Line as LineMarker, Marker, TextSize}, Lane, utils::Color, Signal, signal::Level};
+use crate::model::{Diagram, markers::{Label, TextAnchor, Line as LineMarker, Marker}, Lane, utils::Color, Signal, signal::Level};
 
 // Constants
 const PADDING: f64 = 30.0;
@@ -20,7 +20,9 @@ const WAVE_PADDING_BOTTOM: f64 = WAVE_PADDING;
 const LANE_HEIGHT: f64 = WAVE_HEIGHT + WAVE_PADDING_TOP + WAVE_PADDING_BOTTOM;
 
 const DEFAULT_WAVE_OFFSET: f64 = WAVE_PERIOD_WIDTH * 1.5;
+#[allow(unused)]
 const MIN_WAVE_WIDTH: f64 = WAVE_PERIOD_WIDTH * 4.0;
+#[allow(unused)]
 const MIN_LANE_WIDTH: f64 = DEFAULT_WAVE_OFFSET + MIN_WAVE_WIDTH;
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -53,7 +55,7 @@ impl Compositor {
             .set("width", "100%")
             .set("height", "100%");
 
-        let title = Label::new(diag.title().to_string());
+        let title = Label::from(diag.title());
         let title = Text::from(&title).translate(width/2.0,PADDING);
 
         let mut lanes = Group::new().set("id", "lanes");
@@ -82,13 +84,13 @@ impl Compositor {
         let wave_end = wave_offset + max_ww; // max_ww gets calculated at the top of consume().
 
         // compose y-axis labels
-        let y_axis_label_heigh = Text::from(&Label::small(lane.sig.y_axis.0.to_string()))
+        let y_axis_label_heigh = Text::from(&Label::from(lane.signal.y_axis.0).small())
             .translate(wave_offset-10.0, WAVE_PADDING_TOP);
-        let y_axis_label_low = Text::from(&Label::small(lane.sig.y_axis.1.to_string()))
+        let y_axis_label_low = Text::from(&Label::from(lane.signal.y_axis.1).small())
             .translate(wave_offset-10.0, WAVE_PADDING_TOP + WAVE_HEIGHT );
 
         // todo!() add posibility to crate a label from the title.
-        let signal_name_label = Text::from(&signal_title_to_label(lane.sig.name.to_string(), lane.sig.color)
+        let signal_name_label = Text::from(&signal_title_to_label(lane.signal.name.to_string(), lane.signal.color)
             ).translate(wave_offset-15.0, WAVE_PADDING_TOP + WAVE_HEIGHT/2.0);
 
         group.append(y_axis_label_heigh);
@@ -102,7 +104,7 @@ impl Compositor {
 
         println!("... lane lines composed.");
 
-        group.append(Path::from(&lane.sig)
+        group.append(Path::from(&lane.signal)
             .set("id", format!("lane-{}-wave",num))
             .translate(wave_offset, WAVE_PADDING_TOP)
         );
@@ -136,7 +138,7 @@ impl Compositor {
 
         let mut group = Group::new();
         for marker in markers {
-            group.append(v_dashed_line(marker.position()*WAVE_PERIOD_WIDTH, top_y, bottom_y).with_color(marker.color()).with_size(marker.thickness()));
+            group.append(v_dashed_line(marker.position()*WAVE_PERIOD_WIDTH, top_y, bottom_y).with_color(marker.color).with_size(marker.thickness));
         }
         group
     }
@@ -153,7 +155,7 @@ impl Compositor {
 
 // helper functions
 fn get_max_wave_len(diagram: &Diagram) -> usize {
-    if let Some(max_sig) = diagram.lanes().iter().map(|l| &l.sig ).max() {
+    if let Some(max_sig) = diagram.lanes().iter().map(|l| &l.signal ).max() {
         return max_sig.wave.len();
     } else {
         return 0;
@@ -164,10 +166,10 @@ fn h_dashed_line(x1: f64,x2: f64,y: f64) -> Line {
     Line::new()
         .set("x1", x1).set("y1", y)
         .set("x2", x2).set("y2", y)
-        .set("stroke", Color::Lightgray.to_string())
-        .set("stroke-linecap", "round")
-        .set("stroke-width", "0.5")
-        .set("stroke-dasharray", "10 6")
+        .with_color(Color::Lightgray)
+        .rounded()
+        .dash("10 6")
+        .with_size(0.5)
 }
 
 fn v_dashed_line(x: f64, y1: f64,y2: f64) -> Line {
@@ -181,10 +183,7 @@ fn v_dashed_line(x: f64, y1: f64,y2: f64) -> Line {
 }
 
 fn signal_title_to_label(title: String, color: Color) -> Label{
-    let mut label = Label::new(title);
-    label.set_anchor(TextAnchor::End);
-    label.set_color(color);
-    label
+    Label::from(title).align(TextAnchor::End).color_with(color)
 }
 
 
@@ -193,11 +192,11 @@ fn signal_title_to_label(title: String, color: Color) -> Label{
 impl From<&Label> for Text {
     fn from(label: &Label) -> Text{
         Text::new()
-            .set("fill", label.color().to_string())
+            .with_color(label.color)
+            .align_to(label.anchor)
             .set("font-family", "Segoe Print")
-            .set("font-size", label.size().to_string())
-            .set("text-anchor", label.anchor().to_string())
-            .add(svg::node::Text::new(label.text()))
+            .set("font-size", label.size.to_string())
+            .add(svg::node::Text::new(label.text.clone()))
     }
 }
 

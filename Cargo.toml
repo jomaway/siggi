@@ -7,4 +7,6 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "3.1.1", features = ["derive"] }
+getset = "0.1.2"
+serde_json = "1.0.79"
 svg = "0.10.0"

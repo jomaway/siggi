@@ -1,51 +1,106 @@
 // parse.rs 
 pub mod error;
 
-use serde::Deserialize;
-
+use serde::{Deserialize, Deserializer, de};
+use serde_json::Value;
 
 use std::str::FromStr;
 
-use crate::model::{signal::{Wave, Level, Clock, SignalGenerator}, Signal, Diagram, Lane, utils::Color};
+use crate::model::{signal::{Wave, Level, Clock, SignalGenerator}, Signal, Diagram, Lane, utils::Color, marker::Marker};
 use self::error::{ParseWaveError, ParseError};
 
 
-fn default_period() -> f64 {
+fn default_to_1() -> f64 {
     1.0
+}
+
+fn default_yaxis() -> String {
+    "H,L".into()
 }
 
 #[derive(Debug, Deserialize)]
 struct JsonData {
     signals: Vec<JsonSignal>,
-    config: JsonConfig,
+    config: Option<JsonConfig>,
 }
+
+#[derive(Debug, Deserialize, Default)]
+struct  JsonConfig {
+    title: Option<String>,
+    _background: Option<String>,
+    //_show_ticks: bool,
+}
+
 #[derive(Debug, Deserialize)]
 struct JsonSignal {
     name: String,
     wave: String,
     #[serde(default)]
     phase: f64,
-    #[serde(default = "default_period")]
+    #[serde(default = "default_to_1")]
     period: f64,
     #[serde(default)]
     color: Color,
+    #[serde(default = "default_yaxis")]
+    _yaxis: String, // todo!()
+    #[serde(default, deserialize_with = "de_markers")]
+    markers: Vec<Marker>,
+
 }
 
-#[derive(Debug, Deserialize)]
-struct  JsonConfig {
-    title: Option<String>,
-    _background: Option<String>,
+fn de_markers<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<Marker>, D::Error> {
+    let mut markers = Vec::<Marker>::new();
+
+    for value in Value::deserialize(deserializer) {
+        if let Ok(Value::Array(arr)) = Value::deserialize(value) {
+            for val in arr {
+                match val {
+                    Value::Number(pos) => { 
+                        if let Some(pos) = pos.as_f64() {
+                            markers.push(Marker::default().at(pos));
+                        }
+                    },
+                    Value::Object(marker) => {
+                        let color : Color = if let Some(field) = marker.get("color") { 
+                            serde_json::from_value(field.clone()).unwrap_or(Color::default()) 
+                        } else { Color::default() };
+
+                        let dashed : bool = if let Some(field) = marker.get("dashed") { 
+                            serde_json::from_value(field.clone()).unwrap_or(true) 
+                        } else { true };
+
+                        let thickness : f64 = if let Some(field) = marker.get("thickness") { 
+                            serde_json::from_value(field.clone()).unwrap_or(1.0) 
+                        } else { 1.0 };
+                        
+                        if let Some(positions) = marker["at"].as_array() {
+                            for pos in positions {
+                                if let Some(pos) = pos.as_f64() {
+                                    markers.push(Marker::new(pos, dashed, thickness, color));
+                                }
+                            }
+                        }
+                    },
+                    _ => return Err(de::Error::custom("wrong type"))
+                }
+            }
+        }
+    }
+
+    Ok(markers)
+
 }
+
 
 // parse diagram from json str
 pub fn from_json_str(json: &str) -> Result<Diagram,ParseError> {
         
     let data : JsonData = serde_json::from_str(json)?;
 
-    let mut diagram = Diagram::from(data.config);
+    let mut diagram = Diagram::from(data.config.unwrap_or_default());
 
     for json_signal in data.signals {
-        diagram.append(Lane::new(Signal::try_from(json_signal)?));
+        diagram.append(Lane::try_from(&json_signal)?);
     }
     
     Ok(diagram)
@@ -107,11 +162,11 @@ impl FromStr for Wave {
 }
 
 
-impl TryFrom<JsonSignal> for Signal {
+impl TryFrom<&JsonSignal> for Signal {
     type Error = ParseError;
 
-    fn try_from(json_signal: JsonSignal) -> Result<Self, Self::Error> {
-        Ok(Signal::new(json_signal.name, json_signal.wave.parse()?)
+    fn try_from(json_signal: &JsonSignal) -> Result<Self, Self::Error> {
+        Ok(Signal::new(&json_signal.name, json_signal.wave.parse()?)
             .shift(json_signal.phase)
             .scale(json_signal.period)
             .color_with(json_signal.color))
@@ -122,5 +177,20 @@ impl From<JsonConfig> for Diagram {
     fn from(json_config: JsonConfig) -> Self {
         Diagram::new(json_config.title)
         // background not supported yet
+    }
+}
+
+
+impl TryFrom<&JsonSignal> for Lane {
+    type Error = ParseError;
+
+    fn try_from(json_signal: &JsonSignal) -> Result<Self, Self::Error> {
+        let mut lane = Lane::new(Signal::try_from(json_signal)?);
+
+        for marker in json_signal.markers.iter() {
+            lane.append_marker(*marker);
+        }
+
+        Ok(lane)
     }
 }

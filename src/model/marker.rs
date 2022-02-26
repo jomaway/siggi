@@ -4,40 +4,49 @@ use super::utils::Color;
 
 // todo!() rename Line to Marker and trait Marker to Positionable
 
-pub trait Marker {
+pub trait Positionable {
     // Get the marker's position
     fn position(&self) -> f64;
+    fn set_position<T: Into<f64>>(& mut self, position: T);
 }
 
-impl Marker for Line {
+impl Positionable for Marker {
     // Get the line's position
     fn position(&self) -> f64 {
         self.position
     }
+
+    fn set_position<T: Into<f64>>(& mut self, position: T) {
+        self.position = position.into();
+    }
 }
 
-impl Marker for Label {
+impl Positionable for Label {
     // Get the label's position
     fn position(&self) -> f64 {
         self.position
     }
+
+    fn set_position<T: Into<f64>>(& mut self, position: T) {
+        self.position = position.into();
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct Line {
+pub struct Marker {
     pub position: f64,
     pub dashed: bool,
     pub thickness: f64,
     pub color: Color,
 }
 
-impl Default for Line {
+impl Default for Marker {
     fn default() -> Self {
         Self { position: 0.0, dashed: true, thickness: 1.0, color: Color::Lightgray }
     }
 }
 
-impl Line {
+impl Marker {
     pub fn new(position: f64, dashed: bool, thickness: f64, color: Color) -> Self { Self { position, dashed, thickness, color } }
     
     /// Places the Line at a given wave position
@@ -49,6 +58,7 @@ impl Line {
 }
 
 
+// Label 
 
 #[derive(Debug, Clone, Default)]
 pub struct Label{

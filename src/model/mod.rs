@@ -1,6 +1,6 @@
 pub mod signal;
 pub mod utils;
-pub mod markers;
+pub mod marker;
 pub mod diagram;
 
 pub use signal::Signal;

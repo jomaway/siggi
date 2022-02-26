@@ -1,4 +1,4 @@
-use siggi::{compose::Compositor, model::{Diagram, utils::Color, signal::{Clock, SignalGenerator}, Signal, markers::{Label, Line}, Lane}};
+use siggi::{compose::Compositor, model::{Diagram, utils::Color, signal::{Clock, SignalGenerator}, Signal, marker::{Label, Marker}, Lane}};
 
 
 fn main() {
@@ -31,7 +31,7 @@ fn generate_manchester_diagram() -> Diagram {
         Label::from("0").at(10.5)
     ];
 
-    let markerline = Line::new(1.5,true,1.2, Color::Red);
+    let markerline = Marker::new(1.5,true,1.2, Color::Red);
 
     let mut diagram = Diagram::new(Some("Manchester Encoding".to_string()));
 

@@ -1,7 +1,7 @@
 // compose/mod.rs
 use svg::{self, node::element::{Group, Text, Path, Rectangle, Line, path::Data}, Node};
 
-use crate::model::{Diagram, markers::{Label, TextAnchor, Line as LineMarker, Marker}, Lane, utils::Color, Signal, signal::Level};
+use crate::model::{Diagram, marker::{Label, TextAnchor, Marker as LineMarker, Positionable}, Lane, utils::Color, Signal, signal::Level};
 
 // Constants
 const PADDING: f64 = 30.0;

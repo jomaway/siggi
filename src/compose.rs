@@ -84,9 +84,9 @@ impl Compositor {
         let wave_end = wave_offset + max_ww; // max_ww gets calculated at the top of consume().
 
         // compose y-axis labels (translate in y direction at 3.0 to match lane lines )
-        let y_axis_label_heigh = Text::from(&Label::from(lane.signal.y_axis.0.to_string()).small().align(TextAnchor::End))
+        let y_axis_label_heigh = Text::from(&Label::from(lane.signal.y_axis.0.to_string()).small().align(TextAnchor::End).color_with(Color::Lightgray))
             .translate(wave_offset-5.0, WAVE_PADDING_TOP + 3.0);
-        let y_axis_label_low = Text::from(&Label::from(lane.signal.y_axis.1.to_string()).small().align(TextAnchor::End))
+        let y_axis_label_low = Text::from(&Label::from(lane.signal.y_axis.1.to_string()).small().align(TextAnchor::End).color_with(Color::Lightgray))
             .translate(wave_offset-5.0, WAVE_PADDING_TOP + WAVE_HEIGHT + 3.0);
 
         // todo!() add posibility to crate a label from the title.

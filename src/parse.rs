@@ -6,7 +6,7 @@ use serde_json::Value;
 
 use std::str::FromStr;
 
-use crate::model::{signal::{Wave, Level, Clock, SignalGenerator}, Signal, Diagram, Lane, utils::Color, marker::Marker};
+use crate::model::{signal::{Wave, Level, Clock, SignalGenerator}, Signal, Diagram, Lane, utils::Color, marker::{Marker, Label}};
 use self::error::{ParseWaveError, ParseError};
 
 
@@ -45,6 +45,10 @@ struct JsonSignal {
     yaxis: YAxis, 
     #[serde(default, deserialize_with = "de_markers")]
     markers: Vec<Marker>,
+    #[serde(default)]
+    ticks: Vec<String>,
+    #[serde(default)]
+    tocks: Vec<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -200,6 +204,14 @@ impl TryFrom<&JsonSignal> for Lane {
 
         for marker in json_signal.markers.iter() {
             lane.append_marker(*marker);
+        }
+
+        for (num,string) in json_signal.ticks.iter().enumerate() {
+            lane.append_label(Label::from(string.clone()).small().at((num as f64 + json_signal.phase) * json_signal.period ).color_with(Color::Lightgray));
+        }
+
+        for (num,string) in json_signal.tocks.iter().enumerate() {
+            lane.append_label(Label::from(string.clone()).small().at((num as f64 + 0.5 + json_signal.phase) * json_signal.period ).color_with(Color::Lightgray));
         }
 
         Ok(lane)

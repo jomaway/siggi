@@ -111,6 +111,11 @@ impl Signal {
         self
     }
 
+    pub fn label_yaxis_with(mut self, yaxis: (String,String)) -> Self {
+        self.y_axis = yaxis;
+        self
+    }
+
     pub fn set_name<T>(&mut self, name: T) -> &mut Self where T: Into<String> {
         self.name = name.into();
         self

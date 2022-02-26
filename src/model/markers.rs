@@ -2,13 +2,11 @@ use std::fmt::{Debug, Display};
 
 use super::utils::Color;
 
-
 // todo!() rename Line to Marker and trait Marker to Positionable
 
 pub trait Marker {
     // Get the marker's position
     fn position(&self) -> f64;
-    fn at(&mut self, position: f64) -> Self;
 }
 
 impl Marker for Line {
@@ -16,20 +14,12 @@ impl Marker for Line {
     fn position(&self) -> f64 {
         self.position
     }
-    fn at(&mut self, position: f64) -> Self {
-        self.position = position;
-        self.clone()  // not a good solution. !!! change this.
-    }
 }
 
 impl Marker for Label {
     // Get the label's position
     fn position(&self) -> f64 {
         self.position
-    }
-    fn at(&mut self, position: f64) -> Self {
-        self.position = position;
-        self.clone()
     }
 }
 
@@ -49,6 +39,13 @@ impl Default for Line {
 
 impl Line {
     pub fn new(position: f64, dashed: bool, thickness: f64, color: Color) -> Self { Self { position, dashed, thickness, color } }
+    
+    /// Places the Line at a given wave position
+    /// Supports builder pattern.
+    pub fn at(mut self, position: f64) -> Self {
+        self.position = position;
+        self
+    }
 }
 
 
@@ -82,7 +79,7 @@ impl From<String> for Label {
 
 impl Label {
 
-    fn at(mut self, position: f64) -> Self{
+    pub fn at(mut self, position: f64) -> Self{
         self.position = position;
         self
     }

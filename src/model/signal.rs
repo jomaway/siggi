@@ -1,16 +1,17 @@
 // siggi/model/signal.rs
 
+
 use super::{utils::Color};
 
 
 #[derive(Debug,Clone, PartialEq)]
 pub struct Signal {
-    pub name: String,
+    pub name: String,  // todo!() change to Option<String>
     pub wave: Wave,
     pub phase: f64,     // Phase shift -> default = 0.0
     pub period: f64,    // Period len  -> default = 1.0
     pub color: Color,
-    pub y_axis: (&'static str, &'static str),
+    pub y_axis: (String, String),
 }
 
 impl Eq for Signal {}
@@ -80,36 +81,57 @@ impl Default for Signal {
             phase: 0.0, 
             period: 1.0, 
             color: Default::default(), 
-            y_axis: ("H","L") }
+            y_axis: (String::from("H"),String::from("L")) }
     }
 }
 
 impl Signal {
-    pub fn new() -> Self {
-        Self::default()
+    pub fn new<T>(name: T, wave: Wave) -> Self where T: Into<String> {
+        Self { name: name.into(), wave, ..Default::default() }
     }
 
-    pub fn name<T>(&mut self, name: T) -> &mut Self where T: Into<String> {
-        self.name = name.into();
-        self
-    }
-
-    pub fn wave<T>(&mut self, wave: T) -> &mut Self where T: Into<Wave> {
-        self.wave = wave.into();
-        self
-    }
-
-    pub fn phase<T>(&mut self, phase: T) -> &mut Self where T: Into<f64> {
+    /// Shift the wave by a given value
+    /// Supports builder pattern
+    pub fn shift<T>(mut self, phase: T) -> Self where T: Into<f64> {
         self.phase = phase.into();
         self
     }
 
-    pub fn period<T>(&mut self, period: T) -> &mut Self where T: Into<f64> {
+    /// Scales the peropd duration of the wave by a given value
+    /// Supports builder pattern
+    pub fn scale<T>(mut self, period: T) -> Self where T: Into<f64> {
         self.period = period.into();
         self
     }
 
-    pub fn color<T>(&mut self, color: T) -> &mut Self where T: Into<Color> {
+    /// Coloring the wave
+    /// Supports builder pattern
+    pub fn color_with<T>(mut self, color: T) -> Self where T: Into<Color> {
+        self.color = color.into();
+        self
+    }
+
+    pub fn set_name<T>(&mut self, name: T) -> &mut Self where T: Into<String> {
+        self.name = name.into();
+        self
+    }
+
+    pub fn set_wave<T>(&mut self, wave: T) -> &mut Self where T: Into<Wave> {
+        self.wave = wave.into();
+        self
+    }
+
+    pub fn set_phase<T>(&mut self, phase: T) -> &mut Self where T: Into<f64> {
+        self.phase = phase.into();
+        self
+    }
+
+    pub fn set_period<T>(&mut self, period: T) -> &mut Self where T: Into<f64> {
+        self.period = period.into();
+        self
+    }
+
+    pub fn set_color<T>(&mut self, color: T) -> &mut Self where T: Into<Color> {
         self.color = color.into();
         self
     }
@@ -160,9 +182,6 @@ impl SignalGenerator for Clock {
             ClockType::Negativ => vec![Level::Up;self.periods],
             ClockType::Positiv => vec![Level::Down;self.periods],
         };
-        Signal::default()
-            .name(self.name)
-            .wave(Wave{levels: wave_data})
-            .clone() //  todo!() check if consuming builder would be better here.
+        Signal::new(self.name.to_string(), Wave{levels: wave_data})
     }
 }

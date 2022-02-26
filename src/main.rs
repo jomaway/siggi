@@ -1,7 +1,7 @@
 
 use std::{str::FromStr, fs};
 
-use siggi::{model::{Signal, signal::{Wave, Clock, SignalGenerator}, Diagram, Lane, markers::{Label, Line, Marker}, utils::Color}, compose::Compositor, parse::{self, }};
+use siggi::{model::{Signal, signal::{Wave, Clock, SignalGenerator}, Diagram, Lane, markers::{Label, Line}, utils::Color}, compose::Compositor, parse::{self, }};
 
 use clap::Parser as ClapParser;
 
@@ -68,7 +68,11 @@ fn generate_test_diagram() -> Diagram {
     let nclk = nclk.to_signal();
 
     let mut s1= Signal::default();
-    s1.name("ts 1").wave( "hlhlhlhlhlhlhlhlhlhl".parse::<Wave>().unwrap()).phase(0).period(0.2).color(Color::Yellow);
+    s1.set_name("ts 1")
+        .set_wave( "hlhlhlhlhlhlhlhlhlhl".parse::<Wave>().unwrap())
+        .set_phase(0)
+        .set_period(0.2)
+        .set_color(Color::Yellow);
 
     let mut d1 = Diagram::new(Some("Simple siggi diagram".to_string()));
 
@@ -87,7 +91,7 @@ fn generate_test_diagram() -> Diagram {
             .add_label_at("1", 3.5)
         );
 
-    let mut l3 = Lane::new(pclk.to_signal().color(Color::Blue).to_owned());
+    let mut l3 = Lane::new(pclk.to_signal().color_with(Color::Blue));
     
     l3.append_label_at(String::from("&lt;- t -&gt;"), 1.5);
     l3.append_marker_at(1.0);
@@ -99,28 +103,26 @@ fn generate_test_diagram() -> Diagram {
 #[allow(unused)]
 fn generate_manchester_example() -> Diagram {
     let clk = Clock::negativ(11);
-    let clk = clk.to_signal().color(Color::Yellow).clone();
+    let clk = clk.to_signal().color_with(Color::Yellow);
 
-    let mut s1= Signal::default();
-    s1.name("Data").wave(Wave::from_str("hlhllhhhllh").unwrap()).color(Color::Red);
+    let mut s1= Signal::new("Data", Wave::from_str("hlhllhhhllh").unwrap() );
+    s1.set_color(Color::Red);
 
-    let mut s2 = Signal::default();
-    s2.name("Manchester").wave(Wave::from_str("ududduuuddu").unwrap()).color(Color::Blue);
+    let mut s2 = Signal::new("Manchester",Wave::from_str("ududduuuddu").unwrap());
+    s2.set_color(Color::Blue);
 
-    let mut lab_1 = Label::from("1");
-    let mut lab_0 = Label::from("0");
     let labels = vec![
-        lab_1.at(0.5).clone(),
-        lab_0.at(1.5).clone(),
-        lab_1.at(2.5).clone(),
-        lab_0.at(3.5).clone(),
-        lab_0.at(4.5).clone(),
-        lab_1.at(5.5).clone(),
-        lab_1.at(6.5).clone(),
-        lab_1.at(7.5).clone(),
-        lab_0.at(8.5).clone(),
-        lab_0.at(9.5).clone(),
-        lab_1.at(10.5).clone()
+        Label::from("1").at(0.5),
+        Label::from("0").at(1.5),
+        Label::from("1").at(2.5),
+        Label::from("0").at(3.5),
+        Label::from("0").at(4.5),
+        Label::from("1").at(5.5),
+        Label::from("1").at(6.5),
+        Label::from("1").at(7.5),
+        Label::from("0").at(8.5),
+        Label::from("0").at(9.5),
+        Label::from("0").at(10.5)
     ];
 
     let markerline = Line::new(1.5,true,1.2, Color::Red);

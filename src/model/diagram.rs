@@ -113,8 +113,8 @@ impl Lane {
     }
 
     /// Append label to the lane
-    pub fn append_labels(&mut self, labels: &mut Vec<Label>) -> &mut Self {
-        self.labels.append(labels);
+    pub fn append_label(&mut self, label: Label) -> &mut Self {
+        self.labels.push(label);
         self
     }
 

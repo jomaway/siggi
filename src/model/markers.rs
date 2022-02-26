@@ -8,7 +8,7 @@ use super::utils::Color;
 pub trait Marker {
     // Get the marker's position
     fn position(&self) -> f64;
-    fn at(&mut self, position: f64) -> &mut Self;
+    fn at(&mut self, position: f64) -> Self;
 }
 
 impl Marker for Line {
@@ -16,9 +16,9 @@ impl Marker for Line {
     fn position(&self) -> f64 {
         self.position
     }
-    fn at(&mut self, position: f64) -> &mut Self {
+    fn at(&mut self, position: f64) -> Self {
         self.position = position;
-        self
+        self.clone()  // not a good solution. !!! change this.
     }
 }
 
@@ -27,18 +27,18 @@ impl Marker for Label {
     fn position(&self) -> f64 {
         self.position
     }
-    fn at(&mut self, position: f64) -> &mut Self {
+    fn at(&mut self, position: f64) -> Self {
         self.position = position;
-        self
+        self.clone()
     }
 }
 
 #[derive(Debug, Clone, Copy)]
 pub struct Line {
-    position: f64,
-    dashed: bool,
-    thickness: f64,
-    color: Color,
+    pub position: f64,
+    pub dashed: bool,
+    pub thickness: f64,
+    pub color: Color,
 }
 
 impl Default for Line {
@@ -49,83 +49,67 @@ impl Default for Line {
 
 impl Line {
     pub fn new(position: f64, dashed: bool, thickness: f64, color: Color) -> Self { Self { position, dashed, thickness, color } }
-
-    /// Get the line's color.
-    pub fn color(&self) -> Color {
-        self.color
-    }
-
-    /// Get the line's thickness.
-    pub fn thickness(&self) -> f64 {
-        self.thickness
-    }
-
-    /// Get the line's dashed.
-    pub fn dashed(&self) -> bool {
-        self.dashed
-    }
 }
 
 
 
 #[derive(Debug, Clone, Default)]
 pub struct Label{
-    text: String,
-    position: f64,
-    color: Color,
-    size: TextSize,
-    anchor: TextAnchor,
+    pub text: String,
+    pub position: f64,
+    pub color: Color,
+    pub size: TextSize,
+    pub anchor: TextAnchor,
+}
+
+impl From<&str> for Label { 
+    fn from(text: &str) -> Self{
+        Self {
+            text: text.into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<String> for Label { 
+    fn from(text: String) -> Self {
+        Self {
+            text,
+            ..Default::default()
+        }
+    }
 }
 
 impl Label {
-    pub fn new<T>(text: T) -> Self where T: Into<String> { Self { text: text.into(), ..Default::default()} }
 
-    pub fn small(text: String) -> Self {
-        Self { text, size: TextSize::Small, color: Color::Lightgray, ..Default::default()}
+    fn at(mut self, position: f64) -> Self{
+        self.position = position;
+        self
     }
 
-    pub fn large(text: String) -> Self {
-        Self { text, size: TextSize::Large, ..Default::default()}
+    pub fn small(mut self) -> Self {
+        self.size = TextSize::Small;
+        self
     }
 
-    pub fn with_size(&mut self, size: TextSize) -> &mut Self {
+    pub fn large(mut self) -> Self {
+        self.size = TextSize::Large;
+        self
+    }
+
+    pub fn with_size(mut self, size: TextSize) -> Self {
         self.size = size;
         self
     }
 
-    /// Get the label's text.
-    pub fn text(&self) -> &str {
-        &self.text
-    }
-
-    /// Get the label's color.
-    pub fn color(&self) -> Color {
-        self.color
-    }
-
-    /// Get the label's size.
-    pub fn size(&self) -> TextSize {
-        self.size
-    }
-
-    /// Get the label's anchor.
-    pub fn anchor(&self) -> TextAnchor {
-        self.anchor
-    }
-
-    /// Set the label's color.
-    pub fn set_color(&mut self, color: Color) {
-        self.color = color;
-    }
-
-    /// Set the label's size.
-    pub fn set_size(&mut self, size: TextSize) {
-        self.size = size;
-    }
-
-    /// Set the label's anchor.
-    pub fn set_anchor(&mut self, anchor: TextAnchor) {
+    pub fn align(mut self, anchor: TextAnchor) ->  Self {
         self.anchor = anchor;
+        self
+    }
+
+    pub fn color_with(mut self, color: Color) -> Self {
+        self.color = color;
+        self
     }
 }
 

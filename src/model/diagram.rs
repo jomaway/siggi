@@ -7,11 +7,12 @@ pub struct Diagram {
     title: Option<String>,
     lanes: Vec<Lane>,
     background: Color,
+    xaxis: Option<String>,
 }
 
 impl Default for Diagram {
     fn default() -> Self {
-        Self { title: Default::default(), lanes: Default::default(), background: Color::White }
+        Self { title: Default::default(), lanes: Default::default(), background: Color::White, xaxis: None }
     }
 }
 
@@ -25,7 +26,14 @@ impl Diagram {
                 return Self::default();
             }
         }
-        Self { title: title, background: Color::White, ..Default::default() } 
+        Self { title, background: Color::White, ..Default::default() } 
+    }
+
+    /// Adds an xaxis arrow to the bottom of the diagram
+    /// Supports builder pattern
+    pub fn has_xaxis(mut self, xaxis: &str) -> Self {
+        self.xaxis = Some(String::from(xaxis));
+        self
     }
 
     /// Set the diagram's background to Darkgray if true.
@@ -60,6 +68,11 @@ impl Diagram {
         self.background = background;
     }
 
+    /// Set the diagram's xaxis.
+    pub fn set_xaxis(&mut self, xaxis: &str) {
+        self.xaxis = Some(String::from(xaxis));
+    }
+
     /// Get a reference to the diagram's title.
     pub fn title(&self) -> String {
         self.title.as_ref().unwrap_or(&String::default()).clone()  // todo!() change clone() to return &String
@@ -78,6 +91,11 @@ impl Diagram {
     /// Get a reference to the diagram's lanes.
     pub fn lanes(&self) -> &[Lane] {
         self.lanes.as_ref()
+    }
+
+    /// Get a reference to the diagram's xaxis.
+    pub fn xaxis(&self) -> Option<&String> {
+        self.xaxis.as_ref()
     }
 }
 

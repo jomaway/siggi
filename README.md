@@ -3,8 +3,6 @@ Siggi creates beautiful timing diagram as svg image.
 
 It can be used as a library or a cli program to generate the signal from an json file. 
 
-![example siggi diagram](siggi.svg)
-
 ## Installation 
 
 ### Using cargo
@@ -26,6 +24,42 @@ OPTIONS:
     -o, --output <OUTPUT>            [default: ./siggi.svg]
     -V, --version                    Print version information
 ```
+
+#### Input File
+
+```json
+{
+    "signals": [
+        {
+            "name" : "NRZ",
+            "wave" : "lhllhllllhhlhllh",
+            "color" : "Yellow",
+            "tocks": ["0","1","0","0","1","0","0","0","0","1","1","0","1","0","0","1"],
+            "markers" : [0,8,16]
+        },
+        {
+            "name": "NRZ-I",
+            "wave": "lhhhlllllhllhhhl",
+            "color": "Blue",
+            "tocks": ["0","1","0","0","1","0","0","0","0","1","1","0","1","0","0","1"],
+            "markers" : [0,8,16]
+        },
+        { 
+            "name": "Manchester",
+            "wave": "duddudddduududdu",
+            "color" : "Red",
+            "tocks": ["0","1","0","0","1","0","0","0","0","1","1","0","1","0","0","1"],
+            "markers" : [0,8,16]
+        }
+    ],
+    "config" : {
+        "title": "Leitungscodierungen"
+    }
+}
+```
+#### Output 
+
+![output.svg](siggi.svg)
 
 ### Library
 

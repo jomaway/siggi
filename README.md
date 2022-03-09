@@ -3,7 +3,18 @@ Siggi creates beautiful timing diagram as svg image.
 
 It can be used as a library or a cli program to generate the signal from an json file. 
 
-## CLI
+![example siggi diagram](siggi.svg)
+
+## Installation 
+
+### Using cargo
+
+At the moment the best way to test siggi is by cloning this repo and using cargo to run siggi. 
+
+I have plans to publish this to crates.io some day.
+
+## Usage
+### CLI
 
 ```shell
 USAGE:
@@ -16,7 +27,7 @@ OPTIONS:
     -V, --version                    Print version information
 ```
 
-## Library
+### Library
 
 See the examples folder.
 

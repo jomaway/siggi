@@ -1,0 +1,224 @@
+<svg viewBox="0 0 935 385" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#FFFFFF" height="100%" id="background" stroke="none" width="100%"/>
+<text fill="#000000" font-family="Segoe Print" font-size="normal" text-anchor="middle" transform="translate(467.5,30)">
+Leitungscodierungen
+</text>
+<g id="lanes" transform="translate(30,55)">
+<g id="lane-0" transform="translate(0,0)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,28)">
+H
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,78)">
+L
+</text>
+<text fill="#FFC300" font-family="Segoe Print" font-size="normal" text-anchor="end" transform="translate(60,50)">
+NRZ
+</text>
+<g id="lane-0-level-lines" transform="translate(0,25)">
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="0" y2="0"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="25" y2="25"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="50" y2="50"/>
+</g>
+<path d="M0,50 h0 h50 v-50 h50 v50 h50 h50 v-50 h50 v50 h50 h50 h50 h50 v-50 h50 h50 v50 h50 v-50 h50 v50 h50 h50 v-50 h50" fill="none" id="lane-0-wave" stroke="#FFC300" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(75,25)"/>
+<g id="lane-0-markers" transform="translate(75,0)">
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="0" x2="0" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="400" x2="400" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="800" x2="800" y1="12.5" y2="87.5"/>
+</g>
+<g id="lane-0-labels" transform="translate(75,100)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(25,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(75,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(125,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(175,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(225,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(275,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(325,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(375,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(425,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(475,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(525,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(575,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(625,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(675,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(725,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(775,0)">
+1
+</text>
+</g>
+</g>
+<g id="lane-1" transform="translate(0,100)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,28)">
+H
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,78)">
+L
+</text>
+<text fill="#0D84F0" font-family="Segoe Print" font-size="normal" text-anchor="end" transform="translate(60,50)">
+NRZ-I
+</text>
+<g id="lane-1-level-lines" transform="translate(0,25)">
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="0" y2="0"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="25" y2="25"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="50" y2="50"/>
+</g>
+<path d="M0,50 h0 h50 v-50 h50 h50 h50 v50 h50 h50 h50 h50 h50 v-50 h50 v50 h50 h50 v-50 h50 h50 h50 v50 h50" fill="none" id="lane-1-wave" stroke="#0D84F0" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(75,25)"/>
+<g id="lane-1-markers" transform="translate(75,0)">
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="0" x2="0" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="400" x2="400" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="800" x2="800" y1="12.5" y2="87.5"/>
+</g>
+<g id="lane-1-labels" transform="translate(75,100)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(25,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(75,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(125,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(175,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(225,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(275,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(325,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(375,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(425,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(475,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(525,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(575,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(625,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(675,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(725,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(775,0)">
+1
+</text>
+</g>
+</g>
+<g id="lane-2" transform="translate(0,200)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,28)">
+H
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="end" transform="translate(70,78)">
+L
+</text>
+<text fill="#FF5733" font-family="Segoe Print" font-size="normal" text-anchor="end" transform="translate(60,50)">
+Manchester
+</text>
+<g id="lane-2-level-lines" transform="translate(0,25)">
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="0" y2="0"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="25" y2="25"/>
+<line stroke="#74838f" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" x1="75" x2="875" y1="50" y2="50"/>
+</g>
+<path d="M0,0 h0 V0 h25 v50 h25 V50 h25 v-50 h25 V0 h25 v50 h25 V0 h25 v50 h25 V50 h25 v-50 h25 V0 h25 v50 h25 V0 h25 v50 h25 V0 h25 v50 h25 V0 h25 v50 h25 V50 h25 v-50 h25 V50 h25 v-50 h25 V0 h25 v50 h25 V50 h25 v-50 h25 V0 h25 v50 h25 V0 h25 v50 h25 V50 h25 v-50 h25" fill="none" id="lane-2-wave" stroke="#FF5733" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(75,25)"/>
+<g id="lane-2-markers" transform="translate(75,0)">
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="0" x2="0" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="400" x2="400" y1="12.5" y2="87.5"/>
+<line stroke="#74838f" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="800" x2="800" y1="12.5" y2="87.5"/>
+</g>
+<g id="lane-2-labels" transform="translate(75,100)">
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(25,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(75,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(125,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(175,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(225,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(275,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(325,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(375,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(425,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(475,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(525,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(575,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(625,0)">
+1
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(675,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(725,0)">
+0
+</text>
+<text fill="#74838f" font-family="Segoe Print" font-size="small" text-anchor="middle" transform="translate(775,0)">
+1
+</text>
+</g>
+</g>
+</g>
+</svg>

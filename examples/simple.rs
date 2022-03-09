@@ -4,8 +4,9 @@ fn main() {
     // Create an Compositor
     let compositor = Compositor::default();
 
-    let diagram = Diagram::new(Some("title".to_string()));
+    let mut diagram = Diagram::new(Some("title".to_string()));
+    diagram.set_xaxis("x axis label");
 
     let doc = compositor.compose(&diagram);
-    svg::save("manchester.svg", &doc).expect("Could not save the diagram.");
+    svg::save("simple.svg", &doc).expect("Could not save the diagram.");
 }

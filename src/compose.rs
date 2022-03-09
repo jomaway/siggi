@@ -1,5 +1,5 @@
 // compose/mod.rs
-use svg::{self, node::element::{Group, Text, Path, Rectangle, Line, path::Data}, Node};
+use svg::{self, node::element::{Group, Text, Path, Rectangle, Line, path::Data, Definitions, Marker, Polygon}, Node};
 
 use crate::model::{Diagram, marker::{Label, TextAnchor, Marker as LineMarker, Positionable}, Lane, utils::Color, Signal, signal::Level};
 
@@ -64,12 +64,28 @@ impl Compositor {
             lanes.append(self.compose_lane(num, lane, max_wave_width).translate(0.0, num as f64 * LANE_HEIGHT));
         }
 
+        let xaxis = if let Some(xaxis) = diag.xaxis() {
+            println!("compose xaxis ");
+            Group::new()
+                .add(Line::new()
+                    .set("x1", 0).set("y1", 10)
+                    .set("x2", max_wave_width).set("y2", 10)
+                    .with_color(Color::Lightgray)
+                    .rounded()
+                    .with_size(1.0)
+                    .set("marker-end", "url(#arrowhead)")
+                )
+                .add(Text::from(&Label::from(xaxis.as_ref()).small().align(TextAnchor::End)).translate(max_wave_width, 20.0)) // 10.0 + ~ TEXT HEIGHT
+
+        } else { Group::new() };
 
         svg::Document::new()
             .set("viewBox", (0,0,width,height))
+            .add(add_defs())
             .add(bg)
             .add(title)
             .add(lanes.translate(PADDING, PADDING + HEADER_HEIGHT))
+            .add(xaxis.translate(PADDING + DEFAULT_WAVE_OFFSET, height - PADDING))
             
     }
 
@@ -160,6 +176,21 @@ fn get_max_wave_len(diagram: &Diagram) -> u32 {
     } else {
         return 0;
     }
+}
+
+// Add defs
+fn add_defs() -> Definitions {
+    let defs = Definitions::new()
+        .add(Marker::new()
+            .set("id", "arrowhead")
+            .set("markerWidth", 10)
+            .set("markerHeight", 7)
+            .set("refX", 0)
+            .set("refY", 3.5)
+            .set("orient", "auto")
+            .add(Polygon::new().set("points", "0 0, 10 3.5, 0 7").with_color(Color::Lightgray))
+        );
+    defs
 }
 
 fn h_dashed_line(x1: f64,x2: f64,y: f64) -> Line {
@@ -321,6 +352,12 @@ impl Colored for Text {
 impl Colored for Path {
     fn with_color(self, color:Color) -> Self {
         self.set("stroke", color.to_string())
+    }
+}
+
+impl Colored for Polygon {
+    fn with_color(self, color:Color) -> Self {
+        self.set("fill", color.to_string())
     }
 }
 

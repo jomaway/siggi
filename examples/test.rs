@@ -45,5 +45,8 @@ fn generate_test_diagram() -> Diagram {
     l3.append_marker_at(1.0);
     l3.append_marker_at(2.0);
 
+    
+    d1.set_xaxis("time");
+
     d1.add(l3)
 }

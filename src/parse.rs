@@ -28,6 +28,7 @@ struct JsonData {
 struct  JsonConfig {
     title: Option<String>,
     _background: Option<String>,
+    xaxis: Option<String>,
     //_show_ticks: bool,
 }
 
@@ -42,7 +43,7 @@ struct JsonSignal {
     #[serde(default)]
     color: Color,
     #[serde(default = "default_yaxis")]
-    yaxis: YAxis, 
+    yaxis: YAxis,
     #[serde(default, deserialize_with = "de_markers")]
     markers: Vec<Marker>,
     #[serde(default)]
@@ -103,9 +104,9 @@ fn de_markers<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<Marker>,
 
 // parse diagram from json str
 pub fn from_json_str(json: &str) -> Result<Diagram,ParseError> {
-        
-    let data : JsonData = serde_json::from_str(json)?;
 
+    let data : JsonData = serde_json::from_str(json)?;
+    
     let mut diagram = Diagram::from(data.config.unwrap_or_default());
 
     for json_signal in data.signals {
@@ -190,7 +191,12 @@ impl TryFrom<&JsonSignal> for Signal {
 
 impl From<JsonConfig> for Diagram {
     fn from(json_config: JsonConfig) -> Self {
-        Diagram::new(json_config.title)
+        if let Some(xaxis) = json_config.xaxis {
+            Diagram::new(json_config.title).has_xaxis(&xaxis)
+        } else {
+            // Has no xaxis
+            Diagram::new(json_config.title)
+        }
         // background not supported yet
     }
 }

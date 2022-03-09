@@ -2,6 +2,12 @@
 name = "siggi"
 version = "0.1.0"
 edition = "2021"
+description = "generate beautiful svg timing diagrams"
+readme = "README.md"
+repository = "https://github.com/jomaway/siggi"
+license = "MIT"
+keywords = ["svg", "diagram", "generate", "signals"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

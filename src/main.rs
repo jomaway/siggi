@@ -19,7 +19,7 @@ use clap::Parser as ClapParser;
     title: String,
 
     #[clap(short, long)]
-    #[clap(default_value_t = String::from("./target/siggi.svg"))]
+    #[clap(default_value_t = String::from("./outputs/siggi.svg"))]
     output: String,
 
     #[clap(short,long)]
@@ -30,6 +30,9 @@ use clap::Parser as ClapParser;
 
     #[clap(long)]
     tocks: bool,
+
+    #[clap(long)]
+    split: bool,
 
     #[clap(short,long)]
     input_file: Option<String>
@@ -49,7 +52,15 @@ fn main() {
         println!("Compose svg output ... ");
         let doc = comp.compose(&diagram);
         svg::save(&args.output, &doc).expect("Could not save the diagram.");
-        println!("SVG saved to {}", &args.output)
+        println!("SVG saved to {}", &args.output);
+        if args.split {
+            let docs = comp.compose_splits(&diagram);
+            for (idx,doc) in docs.iter().enumerate() {
+                let output_path = format!("{}-lane-{}.svg",args.output.split('.').collect::<Vec<&str>>()[0], idx+1);
+                svg::save(&output_path, doc).expect("Could not save the diagram.");
+                println!("Lane {} saved to {}", idx, &output_path);
+            }
+        }
     } else {
         println!("Parsing specified args ... ");
         let diagram = parse::from_args(args.title, args.dark, args.clock, args.signal).expect("Parsing error");

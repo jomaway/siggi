@@ -38,6 +38,21 @@ impl Compositor {
         self
     }
 
+    pub fn compose_splits(&self, diag: &Diagram) -> Vec<svg::Document> {     
+        let max_wave_width = get_max_wave_len(diag) as f64 * WAVE_PERIOD_WIDTH;
+        let mut result = Vec::<svg::Document>::new();
+        
+        for (num,lane) in diag.lanes().iter().enumerate() {
+            result.push(
+                svg::Document::new()
+                    .set("viewBox", (0,0,DEFAULT_WAVE_OFFSET + max_wave_width + PADDING,LANE_HEIGHT + PADDING))
+                    .add(self.compose_lane(num, lane, max_wave_width)
+                )
+            );
+        }
+        result
+    }
+
     pub fn compose(&self, diag: &Diagram) -> svg::Document {
         // calc document width an height
         let max_wave_width = get_max_wave_len(diag) as f64 * WAVE_PERIOD_WIDTH;
